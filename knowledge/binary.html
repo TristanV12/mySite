@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tristan Villamil</title>
+	<!-- <link href='https://fonts.googleapis.com/css?family=Chivo' rel='stylesheet'> -->
+	<link href="https://fonts.googleapis.com/css?family=Spectral" rel="stylesheet">
+	
+	<link rel="stylesheet" type="text/css" href="../css/t-rex.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body onresize="something_professional(0, 1)">
+	<div id="animal"></div>
+	<div id="title">
+		<h1 id="title-text">Binary Search / Sort</h1>
+		<ul id="links">
+			<a href="../index.html"><li class="menu">Home</li></a>
+			<a href="../resume.pdf" target="_blank"><li class="menu">Resume</li></a>
+			<a href="../wiki.html"><li class="menu">Knowledge</li></a>
+		</ul>
+		<!-- <p>[met-<em>uh</em>-<b>mawr</b>-fis]</p> -->
+		<h2>A motivating example</h2>
+		<p>
+			Back before Google, all words and their definitions would be kept in books called Dictionaries. I know: it's crazy. They were stored alphabetically. If you were to search for a word, you could start with the first page and first word, and if that wasn't your word, try the next one.
+		</p>
+		<p>
+			The above method worked if you had a year to find words, but there were better ways. For example, one way is to open the book to somewhere around the middle, see if your word came before or after the words on that page (alphabetically) and divide your search. This is the theory of the following subject.
+		</p>
+
+		<h2>Code base</h2>
+		<p>
+			I am writing the code base.
+		</p>
+
+		<h2>Side note about binary</h2>
+		<p>
+			This section is for people who have not really coded before or who don't fully grasp number systems. It doesn't really affect below, but it's a good thing to know. The most that most people know about binary is that the "hackers" in their favorite movies refer to them. And it's always a completely <a href="https://www.youtube.com/watch?v=aApTVqeGJMw" target="_blank">accurate</a> representation of the computer science field. Oh, Q, you magnificent bastard. I digress.
+		</p>
+		<p>
+			What binary really is is just a number system. Most people that I've met count using a base-10 system because, you know, we have 10 fingers. This just means we have 10 digits (0, 1, 2, 3, 4, 5, 6, 7, 8, 9) and with those digits we can represent all real integers (repeating decimals are weird). The way that we do this is by saying that the furthest number to the right is the ones place: the number represented in that column is whatever the digit is times 10<sup>0</sup> or 1. As the numbers continue left, the exponent increases by 1. For example 110 = 1 &#215; 10 <sup>2</sup> + 1 &#215; 10 <sup>1</sup> + 0 &#215; 10 <sup>0</sup> = 110. This may seem roundabout, but I swear I'm getting somewhere.
+		</p>
+		<p>
+			To change the base of a number system, we just need to change the number of digits we use and the base of the number we multiply by. Binary is base-2, so we use two digits (0, 1) to represent all numbers in binary. Then, using the above method, we can convert binary to decimal and back. For example 110<sub>2</sub> = 1 &#215; 2<sup>2</sup> + 1 &#215; 2<sup>1</sup> + 0 &#215; 2<sup>0</sup> = 6<sub>10</sub>.
+		</p>
+		<p>
+			Converting back is slightly less intuitive: we can use modular division to accomplish this. Modular division is the word for the remainder of division, for example 3 mod 2 is 1, 6 mod 2 is 0. We can use a very simple algorithm using modular division to calculate the binary representation of a decimal number. First, modularly divide the decimal by 2. The answer is the furthest digit to the right. Then, subtract this from the decimal, divide by the base (2) and then modularly divide by 2 to get the next digit. Repeat this until the decimal is 0.
+		</p>
+		<p>
+			In this way, we can convert 6 in base 10 to binary. First, modularly divide 6 by 2 to get 0. Subtract and divide to get a new decimal of 3. Modularly divide this by 2 to get 1. Subtract and divide to get a new decimal of 1. Modularly divide to get 1. This gives us a binary number of 110 as was shown above. See the code on my <a href="">Github</a> to see the JavaScript implementation below.
+		</p>
+		<input id="from_value" type="text" class="form-control" placeholder="number to convert">
+		<label for="from_base">Input this base</label>
+		<select name="from_base" id="from_base">
+			<option value="2">2 (binary)</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10" selected="selected">10 (decimal)</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+		</select>
+
+		<label for="to_base">convert it to</label>
+		<select name="to_base" id="to_base">
+			<option value="2" selected="selected">2 (binary)</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10 (decimal)</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+		</select>
+		<button type="button" id="convert" class="btn btn-secondary">Convert</button>
+		= <span id="base_convert"></span>
+		<script src="../js/base_convert.js"></script>
+
+		<h2>Binary Search</h2>
+		<p>
+			Binary search can best be visualized a tree, and that is how it is normally implemented. For more on graphs, which will be referenced here, see my description of <a href="algs.html">BFS</a>. The idea of a binary tree is that each node holds a value, all values less than this value are to the left of the node, all values greater are to the right. 
+		</p>
+
+		<h2>Binary Sort</h2>
+	</div>
+	<script src="../js/t-rex.js"></script>
+	<script>window.onload = something_professional(1, 1);</script>
+</body>
+</html>

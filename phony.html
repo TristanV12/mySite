@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Metamorphis - Phony</title>
+	<link href='https://fonts.googleapis.com/css?family=Chivo' rel='stylesheet'>
+	<style>
+		body{
+			margin: 0 !important;
+			padding: 0 !important;
+			font-family: 'Chivo';/*font-size: 22px;*/
+		}
+		h1{
+		}
+		ul{
+			border-top: 1px solid black;
+			border-bottom: 1px solid black;
+			padding: 0;
+			text-align: center;
+		}
+		ol{
+			padding: 0;
+		}
+		li.menu{
+			display: inline-block;
+			width: 20%;
+			text-align: center;
+			margin:0;
+		}
+		li.fb{
+			display: inline-block;
+			text-align: center;
+			margin-right: 5%;
+		}
+		a{
+			color:black;
+		}
+		li.menu:hover{
+			background-color: lightgrey;
+		}
+		#title{
+			position:absolute;
+			width:60%;
+		}
+		.triangle{
+			width: 0;
+			height: 0;
+			display: inline-block;
+			position:absolute;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="js/t-rex.js"></script>
+</head>
+<body>
+	<img id="image" src="img/phony.png"></img>
+	<div id="title">
+		<h1 id="title-text">Phony</h1>
+		<ul id="links">
+			<a href="index.html"><li class="menu">Home</li></a>
+			<a href="phony.html"><li class="menu">Phony</li></a>
+			<a href="#"><li class="menu">Link 3</li></a>
+			<a href="#"><li class="menu">Link 4</li></a>
+		</ul>
+		<!-- <p>[met-<em>uh</em>-<b>mawr</b>-fis]</p> -->
+		<p>
+			Phony is a narrative based game where you take the role of a landlord and wander around a world and interact with the things around you. Interact with characters in silly scenarios and try your best to make the most of what you have. There is no dungeon boss, ranking system, or inevitable world apocalypse, but just about experiencing the the fleeting moments of life and learning more about the people around you and yourself.
+		</p>
+		<p>
+			<em>Currently under pc development.</em>
+		</p>
+		<ol>
+			<li class="fb">
+				<a href="https://www.facebook.com/PHONYthegame/">
+					<img src="img/fb_icon.png" alt="Facebook" style="width:25px;height:25px;">
+				</a>
+			</li>
+			<li class="fb">
+				<a href="https://twitter.com/PHONYthegame">
+					<img src="img/twitter_icon.png" alt="Twitter" style="width:25px;height:25px;">
+				</a>
+			</li>
+			<li class="fb">
+				<a href="https://www.instagram.com/">
+					<img src="img/insta_icon.png" alt="Instagram" style="width:25px;height:25px;">
+				</a>
+			</li>
+		</ol>
+	</div>
+
+	<script>
+		var morph = 1;
+		var max = 3;
+
+		var t_rex_height = 125;
+		var t_rex_width = 120;
+
+		var snake_height = 100;
+		var snake_width = 200;
+
+		var wolf_height = 125;
+		var wolf_width = 20;
+
+		var testing = true;
+		var speed = 100;
+
+		var screenWidth;
+		var screenHeight;
+
+		function control(){
+			if(morph == max){ morph = 1; }
+			else{ morph = morph + 1; }
+			something_professional(1);
+		}
+		function fix_title(num){
+			if(num == 1){
+				$('#title').css("width", "90%");
+				$('#title').css("top", "175px");
+				$('#title').css("right", "5%");
+				$('#title-text').css("text-align", "center");
+			}
+			if(num == 0){
+				$('#title').css("width", "50%");
+				$('#title').css("top", ((screenHeight - $('#title').height()) / 2).toFixed() + "px");
+				$('#title').css("right", (screenWidth / 8).toFixed() + "px");
+				$('#title-text').css("text-align", "left");
+			}
+		}
+		function something_professional(num){
+			screenWidth = $(window).width();
+			screenHeight = $(window).height();
+			$('#title').css("top", ((screenHeight - $('#title').height()) / 2).toFixed() + "px");
+			$('#title').css("right", (screenWidth / 24).toFixed() + "px");
+			// $('#animal').html("");
+			// for (var i = 24; i >= 0; i--) {
+			// 	$('#animal').html($('#animal').html() + "<div id=\"triangle" + i.toString() + "\" class=\"triangle\" onclick=\"control()\"></div>");
+			// };
+			//animation((screenHeight / 2) - 100, (screenWidth / 2));
+			fix_title(0);
+			$('#image').css("top", ((screenHeight - t_rex_height - 50) / 2) + "px");
+			$('#image').css("right", ((screenWidth + t_rex_width) / 2) + "px");
+			if(!testing){
+				if(morph == 1 && num == 1){
+					var i = 1;
+					var top = (screenHeight - t_rex_height - 50) / 2;
+					var right = (2 * screenWidth / 3) + t_rex_width;
+					if((screenWidth / 3) < snake_width){
+						top = 25;
+						right = (screenWidth / 2) + (t_rex_width / 2);
+						fix_title(1);
+					}else{ fix_title(0); }
+
+					var interval = setInterval(function(){
+						make_t_rex(top, right, i);
+						i += 1;
+						if(i >= 5){
+							clearInterval(interval);
+						}
+					}, speed);
+				}else if(morph == 2 && num == 1){
+					var i = 1;
+					var top = (screenHeight - snake_height - 50) / 2;
+					var right = (2 * screenWidth / 3) + snake_width + 50;
+					if((screenWidth / 3) < snake_width + 50){
+						top = 25;
+						right = (screenWidth / 2) + (snake_width / 2);
+						fix_title(1);
+					}else{ fix_title(0); }
+					var interval = setInterval(function(){
+						make_snake(top, right, i);
+						i += 1;
+						if(i >= 5){
+							clearInterval(interval);
+						}
+					}, speed);
+				}else if(morph == 3 && num == 1){
+					var i = 1;
+					var top = (screenHeight - wolf_height - 50) / 2;
+					var right = (2 * screenWidth / 3) + wolf_width + 50;
+					if((screenWidth / 3) < snake_width + 50){
+						top = 25;
+						right = (screenWidth / 2) + (wolf_width / 2);
+						fix_title(1);
+					}else{ fix_title(0); }
+
+					var interval = setInterval(function(){
+						make_wolf(top, right, i);
+						i += 1;
+						if(i >= 5){
+							clearInterval(interval);
+						}
+					}, speed);
+				}
+				if(morph == 1 && num == 0){
+					var top = (screenHeight - t_rex_height - 50) / 2;
+					var right = (2 * screenWidth / 3) + t_rex_width;
+					if((screenWidth / 3) < t_rex_width){
+						top = 25;
+						right = (screenWidth / 2) + (t_rex_width / 2);
+						fix_title(1);
+					}else{ fix_title(0); }
+					make_t_rex(top, right, 0);
+				}else if(morph == 2 && num == 0){
+					var top = (screenHeight - snake_height - 50) / 2;
+					var right = (2 * screenWidth / 3) + snake_width + 50;
+					if((screenWidth / 3) < snake_width + 50){
+						top = 25;
+						right = (screenWidth / 2) + (snake_width / 2);
+						fix_title(1);
+					}else{ fix_title(0); }
+					make_snake(top, right, 0);
+				}else if(morph == 3 && num == 0){
+					var top = (screenHeight - wolf_height - 50) / 2;
+					var right = (2 * screenWidth / 3) + wolf_width + 50;
+					if((screenWidth / 3) < wolf_width + 50){
+						top = 25;
+						right = (screenWidth / 2) + (wolf_width / 2);
+						fix_title(1);
+					}else{ fix_title(0); }
+					make_wolf(top, right, 0);
+				}
+			}
+		}
+		window.onload = something_professional(1);
+		// window.onresize = something_professional();
+	</script>
+
+</body>
+</html>

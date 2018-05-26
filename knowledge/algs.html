@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tristan Villamil</title>
+	<!-- <link href='https://fonts.googleapis.com/css?family=Chivo' rel='stylesheet'> -->
+	<link href="https://fonts.googleapis.com/css?family=Spectral" rel="stylesheet">
+	
+	<link rel="stylesheet" type="text/css" href="../css/t-rex.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body onresize="something_professional(0, 1)">
+	<div id="animal"></div>
+	<div id="title">
+		<h1 id="title-text">Search Algorithms</h1>
+		<ul id="links">
+			<a href="../index.html"><li class="menu">Home</li></a>
+			<a href="../resume.pdf" target="_blank"><li class="menu">Resume</li></a>
+			<a href="../wiki.html"><li class="menu">Knowledge</li></a>
+		</ul>
+		<!-- <p>[met-<em>uh</em>-<b>mawr</b>-fis]</p> -->
+		<h2>A motivating example</h2>
+		<p>
+			Imagine you are in a city without a phone. Somewhere in the city, you were told, there is a ramen place that sells the best ramen in America. You just <em>have</em> to find it. All you have is a map of the city with a big blue circle around your location, and a big red circle around the ramen place. How do you find the place?
+		</p>
+		<p>
+			In theory, a human can find the restaurant because humans are intuitive and can use skills they have mastered doing other things on this. But the question really is how would you break the task into steps so that a computer could do it. For that, we introduce graphs.
+		</p>
+
+		<h2>Code base</h2>
+		<p>Please read below for in-depth descriptions of the algorithms. I implemented all of the described algorithms in <a href="https://github.com/TristanV12/examples/blob/master/Search%20Algorithms/search_algorithms.py">search_algorithms.py</a>, and all of the data structures in <a href="https://github.com/TristanV12/examples/blob/master/Search%20Algorithms/util.py">util.py</a>. In order to run the code, use all of the files in <a href="https://github.com/TristanV12/examples/tree/master/Search%20Algorithms">Search Algorithms</a> and use <code>python search_algorithms.py --graph_size 10 --speed .1</code>. Run <code>python search_algorithms.py -h</code> to use different algorithms or settings.</p>
+
+		<h2>Graphs</h2>
+		<p>
+			When we talk about graphs in this context, we are not referring to the x and y graphs of algebra, we're talking about a general picture of a map. In the example, we are in a city, probably on a grid system. The graph would look something like the image below.
+		</p>
+		<p>
+			When we talk about graphs in this context, we are not referring to the x and y graphs of algebra, we're talking about a general picture of a map. In the example, we are in a city, probably on a grid system. The graph would look something like the image below.
+		</p>
+		<img src="https://raw.githubusercontent.com/TristanV12/examples/master/Search%20Algorithms/example_undirected_graph.png" alt="Example Undirected Graph">
+		<p>
+			The graph above is meant to represent an undirected graph: this means that you may go in either direction along the edges. Edges is the term for the black lines in the above graph, think of them as roads you can walk along, the circles being start or end points. The circles are called nodes, the blue one being the start location, the red being the end point.
+		</p>
+		<p>
+			To get intuition on directed graphs, think about driving on one-way streets. You can only go in one direction. For weighted graphs, think about driving on streets with different speed limits. If we take the back roads, it will take an hour, if we drive on the highway it will only take half an hour, even though the distance may be longer.
+		</p>
+		<p>
+			I think I have spent enough time on graphs, if not, hopefully it will be clearer with examples.
+		</p>
+
+		<h2>Breadth-First Search</h2>
+		<p>
+			Breadth-first search or BFS is super intuitive. Look at the graph above. Starting with the blue node, look at all of the places you can go: down and to the right. First check down. Is it the end node? No, so make a note to check its neighbors next. Check the right node. It is also not the end node, so add its neighbors to the checklist.
+		</p>
+		<p>
+			I keep talking about a list to check, for the case of BFS, I am referring to a first in, first out (FIFO) queue. We will discuss other types of lists later. This is implemented in <a href="https://github.com/TristanV12/examples/blob/718dc2d5096667a273d0348b761ccdd1648760fe/util.py#L33-L71" target="_blank">util.py</a> in my Github. You can see there, as the name implies, the first item in the queue is the first one out.
+		</p>
+		<canvas id="BFS_animation" width="300" height="150"></canvas>
+		<script src="../js/BFS_animation.js"></script>
+		<p>
+			A simple example animation is shown above, where the order is clearly visible. This is why it is called breadth-first search: the connected nodes are searched before the nodes attached to those are searched. 
+		</p>
+
+		<h2>Depth-First Search</h2>
+		<p>
+			DFS is subtly different from the BFS algorithm, instead of analyzing the nodes in rows (by breadth), they are analyzed in columns. The actual implementation difference is as simple as changing the queue into a last in, first out (LIFO) queue. This results in the animation below.
+		</p>
+		<canvas id="DFS_animation" width="300" height="150"></canvas>
+		<script src="../js/DFS_animation.js"></script>
+
+		<h2>Notes and Comparisons</h2>
+		<p>
+			Depending on the use, BFS is better than DFS. For example, if we were to search a map for the <em>closest</em> goal state, i.e., a Starbucks in the city where there is more than one, BFS would search all of the closest nodes first, whereas DFS could find a further goal state first. DFS does not always find the most direct route, but can often find the goal state faster.
+		</p>
+		<p>
+			See example code for both of these algorithms in my <a href="">Github</a>
+		</p>
+
+		<h2>Djikstra's Algorithm</h2>
+		<p>
+			Djikstra's Algorithm is a path-finding algorithm, meant for finding the shortest path between two points, normally for weighted graphs. It is most similar to the BFS algorithm, but uses a <em>priority queue</em>, a different data structure altogether.
+		</p>
+		<p>
+			A priority queue is a data structure that returns its items in order of priority. In order to get this to work for Djikstra's algorithm, we begin by assuming that the distance from the starting node to the starting node is 0, and for every other node the distance is infinity. From there, calculate the true distance from the starting node to every node.
+		</p>
+		<p>
+			The way that this is done is to start at the start node. Add the connected nodes to the priority queue using the distance from the start node (the edge weight) as their priority. Then, pop the item with the minimum priority. If the priority is less than the current estimated weight (remember, the estimated weights in the beginning are infinity), check if the current node is the end node. If not, add all the connected nodes as the original nodes were.
+		</p>
+		<p>
+			The path is trivial to find: simply go backwards through the attached nodes, start and the end, find the node with the minimum distance from the start (based on the already calculated distances) and repeat. This will always give the minimum path.
+		</p>
+	</div>
+	<script src="../js/t-rex.js"></script>
+	<script>window.onload = something_professional(1, 1);</script>
+</body>
+</html>
